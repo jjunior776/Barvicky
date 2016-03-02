@@ -1,45 +1,55 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef HRA_H
+#define HRA_H
 
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <QGraphicsTextItem>
+#include <QCloseEvent>
 
 namespace Ui {
-class MainWindow;
+class Hra;
 }
 
-class MainWindow : public QMainWindow
+class Hra : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit Hra(QWidget *parent = 0);
+    void spustHru(int mod);
+    ~Hra();
 
 private slots:
     void nahodneVymaluj();
+
+    void novaHra();
+
+    void prohra();
 
     void rozhodni(bool odpoved);
 
     void on_spravneBtn_clicked();
 
     void on_spatneBtn_clicked();
-
+protected:
+    void closeEvent(QCloseEvent *event);
+signals:
+    void closed();
 private:
     QList<QColor> barvy;
     QString nazvy[5];
+    int herniMod;
     int aktualniBarva;
     int aktualniNazev;
     int spravne;
     int spatne;
     int celkem;
-    Ui::MainWindow *ui;
+    Ui::Hra *ui;
     QGraphicsScene *scena;
     QGraphicsRectItem *ctverec;
     QGraphicsTextItem *text;
 
 };
 
-#endif // MAINWINDOW_H
+#endif // HRA_H

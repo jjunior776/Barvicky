@@ -13,8 +13,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+    menu.cpp \
+    hra.cpp \
+    konechry.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += \
+    menu.h \
+    hra.h \
+    konechry.h
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    menu.ui \
+    hra.ui \
+    konechry.ui
