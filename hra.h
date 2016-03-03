@@ -6,6 +6,8 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsTextItem>
 #include <QCloseEvent>
+#include <QTimer>
+#include <QElapsedTimer>
 
 namespace Ui {
 class Hra;
@@ -18,6 +20,7 @@ class Hra : public QMainWindow
 public:
     explicit Hra(QWidget *parent = 0);
     void spustHru(int mod);
+
     ~Hra();
 
 private slots:
@@ -32,6 +35,8 @@ private slots:
     void on_spravneBtn_clicked();
 
     void on_spatneBtn_clicked();
+
+    void stopuj();
 protected:
     void closeEvent(QCloseEvent *event);
 signals:
@@ -39,6 +44,10 @@ signals:
 private:
     QList<QColor> barvy;
     QString nazvy[5];
+    qint64 sekundy;
+    qint64 minuty;
+    QTimer *casomira;
+    QElapsedTimer *stopky;
     int herniMod;
     int aktualniBarva;
     int aktualniNazev;

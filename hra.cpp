@@ -13,9 +13,14 @@ Hra::Hra(QWidget *parent) :
 
     scena = new QGraphicsScene(this);
     ui->platnoGV->setScene(scena);
-
+    casomira = new QTimer(this);
+    stopky = new QElapsedTimer;
     ctverec = new QGraphicsRectItem(0,50,100,100);
-    text = new QGraphicsTextItem("Barvička");
+    ctverec->setPen(QColor("white"));
+    text = new QGraphicsTextItem;
+    sekundy = 0;
+    minuty = 0;
+    connect(casomira,SIGNAL(timeout()),this,SLOT(stopuj()));
 
     text->setPos(0,150);
 
@@ -42,6 +47,25 @@ Hra::~Hra()
     delete ui;
 }
 
+void Hra::stopuj(){
+    sekundy = ((stopky->elapsed()/1000) - (minuty*60));
+    if(sekundy>60){
+        minuty++;
+        if(minuty<10){
+            ui->minutyText->setText("0"+QString::number(minuty));
+        }
+        else{
+            ui->minutyText->setText(QString::number(minuty));
+        }
+    }
+    if(sekundy<10){
+        ui->sekundyText->setText("0"+QString::number(sekundy));
+    }
+    else{
+        ui->sekundyText->setText(QString::number(sekundy));
+    }
+}
+
 void Hra::nahodneVymaluj(){
     aktualniBarva = rand()%5;
     aktualniNazev = rand()%5;
@@ -51,7 +75,17 @@ void Hra::nahodneVymaluj(){
 
 void Hra::on_spravneBtn_clicked()
 {
-    rozhodni(true);
+    if(!casomira->isActive()){
+        ui->spatneBtn->show();
+        ui->spravneBtn->setText("Správně");
+        ctverec->setPen(QColor("black"));
+        nahodneVymaluj();
+        casomira->start();
+        stopky->start();
+    }
+    else{
+        rozhodni(true);
+    }
 }
 
 void Hra::on_spatneBtn_clicked()
@@ -85,7 +119,9 @@ void Hra::spustHru(int mod){
 }
 
 void Hra::novaHra(){
-    nahodneVymaluj();
+    //nahodneVymaluj();
+    ui->spatneBtn->hide();
+    ui->spravneBtn->setText("Spustit hru");
     spravne = spatne = celkem = 0;
     ui->spravneText->setText("Správně: "+QString::number(spravne));
     ui->spatneText->setText("Špatně: "+QString::number(spatne));
@@ -106,10 +142,16 @@ void Hra::prohra(){
     QMessageBox konecHry;
     konecHry.setText("Prohrál jsi, zkus to znovu");
     konecHry.exec();
+    casomira->stop();
+    ui->sekundyText->setText("00");
+    ui->minutyText->setText("00");
     novaHra();
 }
 
 void Hra::closeEvent(QCloseEvent *event){
     emit closed();
+    casomira->stop();
+    ui->sekundyText->setText("00");
+    ui->minutyText->setText("00");
     event->accept();
 }
