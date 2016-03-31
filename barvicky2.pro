@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,14 +16,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
     menu.cpp \
     hra.cpp \
-    konechry.cpp
+    konechry.cpp \
+    skore.cpp
 
 HEADERS  += \
     menu.h \
     hra.h \
-    konechry.h
+    konechry.h \
+    skore.h
 
 FORMS    += \
     menu.ui \
     hra.ui \
-    konechry.ui
+    konechry.ui \
+    skore.ui
