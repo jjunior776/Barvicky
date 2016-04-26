@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>481</width>
+    <width>769</width>
     <height>349</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTableView" name="tableView"/>
+    <widget class="QTableView" name="skoreView"/>
    </item>
   </layout>
  </widget>

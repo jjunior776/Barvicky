@@ -10,7 +10,7 @@ Hra::Hra(QWidget *parent) :
 {
     ui->setupUi(this);
     srand(time(NULL));
-
+    konecDialog = new KonecHry;
     scena = new QGraphicsScene(this);
     ui->platnoGV->setScene(scena);
     casomira = new QTimer(this);
@@ -21,7 +21,7 @@ Hra::Hra(QWidget *parent) :
     sekundy = 0;
     minuty = 0;
     connect(casomira,SIGNAL(timeout()),this,SLOT(stopuj()));
-
+    connect(konecDialog,SIGNAL(zavriHru()),this,SLOT(uzavriSe()));
     text->setPos(0,150);
 
     barvy.append(QColor("red"));
@@ -30,7 +30,7 @@ Hra::Hra(QWidget *parent) :
     barvy.append(QColor("yellow"));
     barvy.append(QColor("magenta"));
 
-    nazvy[0] = "Červná";
+    nazvy[0] = "Červená";
     nazvy[1] = "Modrá";
     nazvy[2] = "Zelená";
     nazvy[3] = "Žlutá";
@@ -122,6 +122,9 @@ void Hra::novaHra(){
     //nahodneVymaluj();
     ui->spatneBtn->hide();
     ui->spravneBtn->setText("Spustit hru");
+    ctverec->setBrush(QColor("white"));
+    ctverec->setPen(QColor("white"));
+    text->setPlainText(" ");
     spravne = spatne = celkem = 0;
     ui->spravneText->setText("Správně: "+QString::number(spravne));
     ui->spatneText->setText("Špatně: "+QString::number(spatne));
@@ -139,10 +142,11 @@ void Hra::novaHra(){
 }
 
 void Hra::prohra(){
-    QMessageBox konecHry;
-    konecHry.setText("Prohrál jsi, zkus to znovu");
-    konecHry.exec();
     casomira->stop();
+    konecDialog->sekundy = minuty*60 + sekundy;
+    konecDialog->skore = spravne;
+    konecDialog->exec();
+
     ui->sekundyText->setText("00");
     ui->minutyText->setText("00");
     novaHra();
@@ -154,4 +158,8 @@ void Hra::closeEvent(QCloseEvent *event){
     ui->sekundyText->setText("00");
     ui->minutyText->setText("00");
     event->accept();
+}
+
+void Hra::uzavriSe(){
+    this->close();
 }

@@ -8,6 +8,7 @@
 #include <QCloseEvent>
 #include <QTimer>
 #include <QElapsedTimer>
+#include "konechry.h"
 
 namespace Ui {
 class Hra;
@@ -37,6 +38,8 @@ private slots:
     void on_spatneBtn_clicked();
 
     void stopuj();
+
+    void uzavriSe();
 protected:
     void closeEvent(QCloseEvent *event);
 signals:
@@ -58,7 +61,7 @@ private:
     QGraphicsScene *scena;
     QGraphicsRectItem *ctverec;
     QGraphicsTextItem *text;
-
+    KonecHry *konecDialog;
 };
 
 #endif // HRA_H

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "hra.h"
+#include "skore.h"
 
 namespace Ui {
 class Menu;
@@ -26,6 +27,7 @@ private slots:
 private:
     Ui::Menu *ui;
     Hra *oknoHry;
+    Skore *oknoSkore;
 };
 
 #endif // MENU_H

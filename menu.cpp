@@ -23,13 +23,18 @@ Menu::Menu(QWidget *parent) :
                            "id INTEGER PRIMARY KEY NOT NULL, prezdivka TEXT, skore INTEGER, "
                            "cas TEXT, rychlost TEXT);");
     }
-
+    this->setWindowTitle("Barvičky - Menu");
 
     oknoHry = new Hra;
-    this->setWindowTitle("Barvičky - Menu");
     connect(oknoHry,SIGNAL(closed()),this,SLOT(show()));
     connect(ui->klasikBtn,SIGNAL(clicked(bool)),this,SLOT(hide()));
     connect(ui->nekonecBtn,SIGNAL(clicked(bool)),this,SLOT(hide()));
+
+    oknoSkore = new Skore;
+    connect(oknoSkore,SIGNAL(closed()),this,SLOT(show()));
+    connect(ui->statistikyBtn,SIGNAL(clicked(bool)),oknoSkore,SLOT(show()));
+    connect(ui->statistikyBtn,SIGNAL(clicked(bool)),this,SLOT(hide()));
+
 }
 
 Menu::~Menu()
