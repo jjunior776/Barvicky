@@ -28,5 +28,57 @@ void Skore::showEvent(QShowEvent *event){
 }
 
 void Skore::inicializujSe(){
-    model->setQuery("SELECT * FROM Skore");
+    refresh(ui->filtrCb->currentIndex(),false);
+    model->setHeaderData(0,Qt::Horizontal, "Přezdívka");
+    model->setHeaderData(1,Qt::Horizontal, "Skóre");
+    model->setHeaderData(2,Qt::Horizontal, "Čas");
+    model->setHeaderData(3,Qt::Horizontal, "Rychlost");
 }
+
+/*void Skore::on_debugClean_clicked()
+{
+    model->setQuery("DELETE FROM Skore");
+}
+*/
+
+void Skore::on_filtrCb_activated(int index)
+{
+    refresh(index,ui->serazeniCb->currentIndex());
+}
+
+void Skore::on_serazeniCb_activated(int index)
+{
+    refresh(ui->filtrCb->currentIndex(),index);
+}
+
+void Skore::refresh(int filtr, bool razeni){
+    QString filtrText;
+    switch (filtr) {
+    case 0:{
+        filtrText = "skore";
+        break;
+    }
+    case 1:{
+        filtrText = "rychlost";
+        break;
+    }
+    case 2:{
+        filtrText = "cas";
+        break;
+    }
+    case 3:{
+        filtrText = "prezdivka";
+        break;
+    }
+    default:
+        break;
+    }
+    if(razeni==true){
+        filtrText += " ASC";
+    }
+    else{
+        filtrText += " DESC";
+    }
+    model->setQuery("SELECT prezdivka,skore,cas,rychlost FROM Skore ORDER BY "+filtrText);
+}
+

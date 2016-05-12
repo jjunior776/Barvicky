@@ -15,8 +15,7 @@ Hra::Hra(QWidget *parent) :
     ui->platnoGV->setScene(scena);
     casomira = new QTimer(this);
     stopky = new QElapsedTimer;
-    ctverec = new QGraphicsRectItem(0,50,100,100);
-    ctverec->setPen(QColor("white"));
+    ctverec = new Ctverec(0,50,100,100,QColor("white"),QColor("white"));
     text = new QGraphicsTextItem;
     sekundy = 0;
     minuty = 0;
@@ -24,11 +23,11 @@ Hra::Hra(QWidget *parent) :
     connect(konecDialog,SIGNAL(zavriHru()),this,SLOT(uzavriSe()));
     text->setPos(0,150);
 
-    barvy.append(QColor("red"));
-    barvy.append(QColor("blue"));
-    barvy.append(QColor("green"));
-    barvy.append(QColor("yellow"));
-    barvy.append(QColor("magenta"));
+    ctverec->pridejBarvu(QColor("red"));
+    ctverec->pridejBarvu(QColor("blue"));
+    ctverec->pridejBarvu(QColor("green"));
+    ctverec->pridejBarvu(QColor("yellow"));
+    ctverec->pridejBarvu(QColor("magenta"));
 
     nazvy[0] = "Červená";
     nazvy[1] = "Modrá";
@@ -67,10 +66,27 @@ void Hra::stopuj(){
 }
 
 void Hra::nahodneVymaluj(){
-    aktualniBarva = rand()%5;
-    aktualniNazev = rand()%5;
+    int predchoziBarva = aktualniBarva;
+
+    int mince = rand()%2;       // 0 = shoda, 1 = neshoda
+    while(predchoziBarva==aktualniBarva){
+        if(mince==0){
+            aktualniBarva = rand()%5;
+            aktualniNazev = aktualniBarva;
+
+        }
+        else{
+            aktualniBarva = rand()%5;
+            aktualniNazev = rand()%5;
+            while(aktualniBarva==aktualniNazev){
+                aktualniBarva = rand()%5;
+                aktualniNazev = rand()%5;
+
+            }
+        }
+    }
     text->setPlainText(nazvy[aktualniNazev]);
-    ctverec->setBrush(barvy.at(aktualniBarva));
+    ctverec->nastavBarvu(aktualniBarva);
 }
 
 void Hra::on_spravneBtn_clicked()
@@ -78,7 +94,6 @@ void Hra::on_spravneBtn_clicked()
     if(!casomira->isActive()){
         ui->spatneBtn->show();
         ui->spravneBtn->setText("Správně");
-        ctverec->setPen(QColor("black"));
         nahodneVymaluj();
         casomira->start();
         stopky->start();
@@ -119,11 +134,9 @@ void Hra::spustHru(int mod){
 }
 
 void Hra::novaHra(){
-    //nahodneVymaluj();
     ui->spatneBtn->hide();
     ui->spravneBtn->setText("Spustit hru");
-    ctverec->setBrush(QColor("white"));
-    ctverec->setPen(QColor("white"));
+    ctverec->nastavBarvu(QColor("white"));
     text->setPlainText(" ");
     spravne = spatne = celkem = 0;
     ui->spravneText->setText("Správně: "+QString::number(spravne));

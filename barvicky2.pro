@@ -17,16 +17,21 @@ SOURCES += main.cpp\
     menu.cpp \
     hra.cpp \
     konechry.cpp \
-    skore.cpp
+    skore.cpp \
+    ctverec.cpp \
+    spravabarev.cpp
 
 HEADERS  += \
     menu.h \
     hra.h \
     konechry.h \
-    skore.h
+    skore.h \
+    ctverec.h \
+    spravabarev.h
 
 FORMS    += \
     menu.ui \
     hra.ui \
     konechry.ui \
-    skore.ui
+    skore.ui \
+    spravabarev.ui

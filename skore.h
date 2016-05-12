@@ -19,6 +19,11 @@ public:
     ~Skore();
 private slots:
     void inicializujSe();
+    //void on_debugClean_clicked();
+    void on_filtrCb_activated(int index);
+    void refresh(int filtr, bool razeni);
+    void on_serazeniCb_activated(int index);
+
 protected:
     void closeEvent(QCloseEvent *event);
     void showEvent(QShowEvent *event);

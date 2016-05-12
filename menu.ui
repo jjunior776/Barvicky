@@ -63,6 +63,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QPushButton" name="barvyBtn">
+     <property name="text">
+      <string>Správa Barev</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QPushButton" name="statistikyBtn">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">

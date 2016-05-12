@@ -9,6 +9,7 @@
 #include <QTimer>
 #include <QElapsedTimer>
 #include "konechry.h"
+#include "ctverec.h"
 
 namespace Ui {
 class Hra;
@@ -45,7 +46,6 @@ protected:
 signals:
     void closed();
 private:
-    QList<QColor> barvy;
     QString nazvy[5];
     qint64 sekundy;
     qint64 minuty;
@@ -59,7 +59,7 @@ private:
     int celkem;
     Ui::Hra *ui;
     QGraphicsScene *scena;
-    QGraphicsRectItem *ctverec;
+    Ctverec *ctverec;
     QGraphicsTextItem *text;
     KonecHry *konecDialog;
 };

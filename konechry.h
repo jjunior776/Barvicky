@@ -30,10 +30,13 @@ private slots:
 
     void on_menuBtn_clicked();
 
+    void on_restartBtn_clicked();
+
 private:
     Ui::KonecHry *ui;
     double rychlost;
     QSqlQueryModel *model;
+    bool zapsan;
 };
 
 #endif // KONECHRY_H
